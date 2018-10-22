@@ -295,12 +295,19 @@ def betterEvaluationFunction(currentGameState):
         dist = min(dist)
         return 1.0 - 1.0 / dist
 
+    def scared_time(s):
+        ghost = s.getGhostStates()
+        times = [g.scaredTimer for g in ghost]
+        return min(times)
+
     score = 1.0 * currentGameState.getScore() / 1000.0
     lf = 0.0 * num_food(currentGameState)
-    cf = 0.0 * closest_food(currentGameState)
-    cg = 0.0 * closest_ghost(currentGameState)
+    cf = 0.01 * closest_food(currentGameState)
+    cg = 0.00025 * closest_ghost(currentGameState)
+    st = 0.0005 * scared_time(currentGameState)
 
-    return score + lf + cf + cg
+    return score + lf + cf + cg + st
 
 # Abbreviation
 better = betterEvaluationFunction
+# 1166.8
